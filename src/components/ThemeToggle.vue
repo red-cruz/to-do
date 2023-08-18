@@ -25,13 +25,20 @@
 <script setup>
 import { Icon } from '@iconify/vue';
 import { ref } from 'vue';
-// system theme
 const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
-const defaultTheme = prefersDarkMode.matches ? 'dark' : 'light';
-const preferredTheme = ref(localStorage.getItem('theme') || defaultTheme);
+const preferredTheme = ref(localStorage.getItem('theme') || getTheme());
 
+// Initial theme switch
 switchTheme(preferredTheme.value);
 
+// theme change event listener
+prefersDarkMode.addEventListener('change', () => {
+  switchTheme(getTheme());
+});
+
+function getTheme() {
+  return prefersDarkMode.matches ? 'dark' : 'light';
+}
 function switchTheme(theme) {
   const body = document.querySelector('body');
   body.setAttribute('data-bs-theme', theme);

@@ -1,17 +1,46 @@
 <template>
   <div class="list-group">
-    <a
+    <li
       href="#"
-      class="list-group-item list-group-item-action active"
+      class="list-group-item list-group-item-action d-flex"
       aria-current="true"
     >
-      <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">List group item heading</h5>
-        <small>3 days ago</small>
+      <div class="align-self-center me-2">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="checkboxNoLabel"
+          value=""
+          aria-label="..."
+        />
       </div>
-      <p class="mb-1">Some placeholder content in a paragraph.</p>
-      <small>And some small print.</small>
-    </a>
+      <div class="d-flex justify-content-between w-100">
+        <div class="">
+          <h5 class="mb-1 text-break">Todo Title</h5>
+          <p class="mb-1">Todo more details</p>
+        </div>
+        <div class="">
+          <small>f</small>
+          <div class="d-flex justify-content-end">
+            <Icon
+              v-if="todo.isEditing"
+              icon="iconamoon:check"
+              width="22"
+              class="text-success"
+              role="button"
+            />
+            <Icon v-else icon="iconamoon:edit" width="22" role="button" />
+            <Icon
+              icon="iconamoon:trash"
+              width="22"
+              class="text-danger ms-1"
+              role="button"
+            />
+          </div>
+        </div>
+      </div>
+    </li>
+
     <a href="#" class="list-group-item list-group-item-action">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">List group item heading</h5>
@@ -31,6 +60,10 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { Icon } from '@iconify/vue';
+import { ref } from 'vue';
+const todo = ref({});
+</script>
 
 <style lang="scss" scoped></style>
