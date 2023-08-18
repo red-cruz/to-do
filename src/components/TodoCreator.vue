@@ -1,13 +1,11 @@
 <template>
   <div
     class="modal fade"
-    id="add-todo-modal"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
+    id="create-todo-modal"
     tabindex="-1"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5">Create todo</h1>
@@ -18,40 +16,66 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="todo-title"
-              placeholder=""
-            />
-            <label for="todo-title">Title</label>
+        <form
+          ref="createTodoForm"
+          class="needs-validation"
+          novalidate
+          @submit="handleSubmit($event)"
+        >
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="todo-title"
+                placeholder=""
+              />
+              <label for="todo-title">Title (optional)</label>
+            </div>
+            <div class="form-floating">
+              <textarea
+                class="form-control"
+                placeholder="Leave a comment here"
+                id="todo-description"
+                required
+              ></textarea>
+              <label for="todo-description">Description</label>
+            </div>
           </div>
-          <div class="form-floating">
-            <textarea
-              class="form-control"
-              placeholder="Leave a comment here"
-              id="todo-description"
-            ></textarea>
-            <label for="todo-description">Description</label>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Create</button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-          <button type="button" class="btn btn-primary">Create</button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue';
+const createTodoForm = ref(null);
+
+function handleSubmit(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const form = e.target;
+  form.classList.add('was-validated');
+}
+onMounted(() => {
+  document
+    .getElementById('create-todo-modal')
+    .addEventListener('hidden.bs.modal', function () {
+      const form = createTodoForm.value;
+      form.classList.remove('was-validated');
+    });
+});
+</script>
 
 <style lang="scss" scoped></style>

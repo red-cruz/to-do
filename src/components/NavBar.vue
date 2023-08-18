@@ -9,9 +9,9 @@
           <Icon
             icon="gridicons:create"
             data-bs-toggle="modal"
-            data-bs-target="#add-todo-modal"
+            data-bs-target="#create-todo-modal"
             role="button"
-            class="me-3 text-primary"
+            class="me-2 text-primary"
             width="23"
           />
           <ThemeToggle />
