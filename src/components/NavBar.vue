@@ -5,13 +5,24 @@
         <a class="navbar-brand" href="#">
           <b class="d-inline-block align-text-top">Todo-List</b>
         </a>
-        <ThemeToggle />
+        <div>
+          <Icon
+            icon="gridicons:create"
+            data-bs-toggle="modal"
+            data-bs-target="#add-todo-modal"
+            role="button"
+            class="me-3 text-primary"
+            width="23"
+          />
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   </header>
 </template>
 
 <script setup>
+import { Icon } from '@iconify/vue';
 import ThemeToggle from './ThemeToggle.vue';
 </script>
 
