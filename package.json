@@ -12,6 +12,7 @@
     "idb": "^7.1.1",
     "jquery": "^3.7.0",
     "noty": "^3.2.0-beta-deprecated",
+    "uid": "^2.0.2",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
     "vuex": "^4.1.0"

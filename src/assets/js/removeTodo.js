@@ -1,8 +1,9 @@
 import Noty from 'noty';
 
 // Noty.setMaxVisible(1);
-export default function removeTodo(e, todoId = 'testtt') {
-  e.target.display = 'none';
+export default function removeTodo(e, todoId) {
+  console.log(todoId);
+
   const noty = new Noty({
     text: `Todo has been deleted. 
       <a 
