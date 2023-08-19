@@ -40,26 +40,27 @@
 
 <script setup>
 import { Icon } from '@iconify/vue';
-import Swal from 'sweetalert2';
-
+import Noty from 'noty';
 function removeTodo() {
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 5000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
-    },
+  var n = new Noty({
+    text: `Todo has been deleted. 
+      <a 
+        class="icon-link icon-link-hover float-end" 
+        style="--bs-link-hover-color-rgb: 25, 135, 84;" 
+        href="#"
+        >
+        undo
+      </a>`,
+    theme: 'nest',
+    layout: 'bottomRight',
+    type: 'alert',
+    timeout: 5000,
   });
-
-  Toast.fire({
-    icon: 'success',
-    title: 'Deleted todo',
-  });
+  n.show();
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import 'noty/src/noty.scss';
+@import 'noty/src/themes/nest.scss';
+</style>

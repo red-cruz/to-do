@@ -3,7 +3,9 @@
     <nav class="navbar fixed-top bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <b class="d-inline-block align-text-top">Todo-List</b>
+          <b class="d-inline-block align-text-top">
+            <Icon icon="mdi:todo-auto" /> To-Do
+          </b>
         </a>
         <div>
           <Icon
