@@ -1,7 +1,7 @@
 <template>
   <header style="height: 80px">
     <nav class="navbar fixed-top bg-body-tertiary">
-      <div class="container-fluid">
+      <div class="container-md">
         <a class="navbar-brand" href="#">
           <b class="d-inline-block align-text-top">
             <Icon icon="mdi:todo-auto" /> To-Do

@@ -3,7 +3,7 @@
     <li
       v-for="item in [1, 2, 3]"
       href="#"
-      class="list-group-item list-group-item-action d-flex"
+      class="list-group-item d-flex"
       aria-current="true"
     >
       <div class="align-self-center me-2">
@@ -25,7 +25,7 @@
               role="button"
             />
             <Icon
-              @click="removeTodo()"
+              @click="removeTodo($event)"
               icon="iconamoon:trash"
               width="22"
               class="text-danger ms-1"
@@ -40,24 +40,7 @@
 
 <script setup>
 import { Icon } from '@iconify/vue';
-import Noty from 'noty';
-function removeTodo() {
-  var n = new Noty({
-    text: `Todo has been deleted. 
-      <a 
-        class="icon-link icon-link-hover float-end" 
-        style="--bs-link-hover-color-rgb: 25, 135, 84;" 
-        href="#"
-        >
-        undo
-      </a>`,
-    theme: 'nest',
-    layout: 'bottomRight',
-    type: 'alert',
-    timeout: 5000,
-  });
-  n.show();
-}
+import removeTodo from '../assets/js/removeTodo';
 </script>
 
 <style lang="scss">
