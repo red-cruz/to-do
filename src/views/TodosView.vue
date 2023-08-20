@@ -20,7 +20,7 @@ import { ref } from 'vue';
 
 const todoList = ref([]);
 
-function createTodo(form, todo) {
+function createTodo(todo) {
   todoList.value.push({
     title: todo.title,
     id: uid(),

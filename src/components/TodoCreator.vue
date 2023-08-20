@@ -29,6 +29,7 @@
                 type="text"
                 class="form-control"
                 id="todo-title"
+                name="todo-title"
                 placeholder=""
               />
               <label for="todo-title">Title (optional)</label>
@@ -38,6 +39,7 @@
                 class="form-control"
                 placeholder="Task"
                 id="todo-task"
+                name="todo-task"
                 required
               ></textarea>
               <label for="todo-task">Task</label>
@@ -60,27 +62,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, defineEmits } from 'vue';
-import closeModal from '../assets/js/closeModal';
+import { ref, defineEmits } from 'vue';
+import submitForm from '../assets/js/submitForm';
 const createTodoForm = ref(null);
 const emit = defineEmits(['create-todo']);
 
-onMounted(() => {});
-/**
- * @param {HTMLFormElement} form
- */
-function onSubmit(form) {
-  const title = form.querySelector('#todo-title');
-  const task = form.querySelector('#todo-task');
-  form.classList.add('was-validated');
-  if (!form.checkValidity()) return;
-  emit('create-todo', form, {
-    title: title.value,
-    task: task.value,
-  });
-  form.reset();
-  closeModal(form);
-}
+const onSubmit = submitForm.bind(null, ({ title, task }) => {
+  emit('create-todo', { title, task });
+});
 </script>
 
 <style lang="scss" scoped></style>
