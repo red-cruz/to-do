@@ -1,5 +1,11 @@
 <template>
-  <div class="modal fade" id="edit-todo-modal" tabindex="-1" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="edit-todo-modal"
+    data-bs-backdrop="static"
+    tabindex="-1"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,30 +17,31 @@
             aria-label="Close"
           ></button>
         </div>
-        <form
-          ref="editTodoForm"
-          class="needs-validation"
-          novalidate
-          @submit="handleSubmit($event)"
-        >
+        <form novalidate @submit.prevent="onSubmit(todo)">
           <div class="modal-body">
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
                 id="todo-title"
+                name="todo-title"
                 placeholder=""
+                ref="title"
+                :value="todo?.title"
               />
               <label for="todo-title">Title (optional)</label>
             </div>
             <div class="form-floating">
               <textarea
                 class="form-control"
-                placeholder="Leave a comment here"
-                id="todo-description"
+                placeholder="Task"
+                id="todo-task"
+                name="todo-task"
+                ref="task"
+                :value="todo?.task"
                 required
               ></textarea>
-              <label for="todo-description">Description</label>
+              <label for="todo-task">Task</label>
             </div>
           </div>
           <div class="modal-footer">
@@ -54,23 +61,26 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-const editTodoForm = ref(null);
-
-function handleSubmit(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const form = e.target;
-  form.classList.add('was-validated');
-}
-onMounted(() => {
-  document
-    .getElementById('edit-todo-modal')
-    .addEventListener('hidden.bs.modal', function () {
-      const form = editTodoForm.value;
-      form.classList.remove('was-validated');
-    });
+import { defineEmits, defineProps, ref } from 'vue';
+import submitForm from '../assets/js/submitForm';
+import closeModal from '../assets/js/closeModal';
+defineProps({
+  todo: {
+    type: Object,
+  },
 });
+const emit = defineEmits(['submit-edit-todo']);
+const title = ref(null);
+const task = ref(null);
+
+const onSubmit = (todo) => {
+  emit('submit-edit-todo', {
+    id: todo.id,
+    title: title.value.value,
+    task: task.value.value,
+  });
+  closeModal(document.getElementById('edit-todo-modal'));
+};
 </script>
 
 <style lang="scss" scoped></style>

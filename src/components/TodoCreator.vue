@@ -1,7 +1,6 @@
 <template>
   <div
     class="modal fade"
-    data-bs-backdrop="static"
     id="create-todo-modal"
     tabindex="-1"
     aria-hidden="true"
@@ -19,7 +18,6 @@
         </div>
         <form
           ref="createTodoForm"
-          class="needs-validation"
           novalidate
           @submit.prevent="onSubmit($event.target)"
         >
@@ -62,9 +60,8 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { defineEmits } from 'vue';
 import submitForm from '../assets/js/submitForm';
-const createTodoForm = ref(null);
 const emit = defineEmits(['create-todo']);
 
 const onSubmit = submitForm.bind(null, ({ title, task }) => {

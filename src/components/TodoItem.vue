@@ -17,8 +17,7 @@
         <small>{{ todo.created_at }}</small>
         <div class="d-flex justify-content-end">
           <Icon
-            data-bs-toggle="modal"
-            data-bs-target="#edit-todo-modal"
+            @click="$emit('edit-todo', todo.id)"
             icon="iconamoon:edit"
             width="22"
             role="button"
@@ -37,10 +36,9 @@
 </template>
 
 <script setup>
+import { defineProps, defineEmits, ref, onMounted } from 'vue';
 import { Icon } from '@iconify/vue';
 import removeTodo from '../assets/js/removeTodo';
-import { defineProps, defineEmits } from 'vue';
-import { uid } from 'uid';
 
 defineProps({
   todo: {
@@ -48,8 +46,7 @@ defineProps({
     required: true,
   },
 });
-
-defineEmits(['completed-task']);
+defineEmits(['completed-task', 'edit-todo']);
 </script>
 
 <style lang="scss">
