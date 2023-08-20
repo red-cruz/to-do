@@ -17,7 +17,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <form novalidate @submit.prevent="onSubmit(todo)">
+        <form novalidate @submit.prevent="onSubmit(todo, $event.target)">
           <div class="modal-body">
             <div class="form-floating mb-3">
               <input
@@ -62,7 +62,6 @@
 
 <script setup>
 import { defineEmits, defineProps, ref } from 'vue';
-import submitForm from '../assets/js/submitForm';
 import closeModal from '../assets/js/closeModal';
 defineProps({
   todo: {
@@ -73,13 +72,18 @@ const emit = defineEmits(['submit-edit-todo']);
 const title = ref(null);
 const task = ref(null);
 
-const onSubmit = (todo) => {
+const onSubmit = (todo, form) => {
+  form.classList.add('was-validated');
+
+  if (!form.checkValidity()) return;
   emit('submit-edit-todo', {
     id: todo.id,
+    created_at: new Date().toLocaleDateString(),
     title: title.value.value,
     task: task.value.value,
   });
-  closeModal(document.getElementById('edit-todo-modal'));
+  form.reset();
+  closeModal(form);
 };
 </script>
 

@@ -24,6 +24,7 @@
           <div class="modal-body">
             <div class="form-floating mb-3">
               <input
+                ref="title"
                 type="text"
                 class="form-control"
                 id="todo-title"
@@ -34,6 +35,7 @@
             </div>
             <div class="form-floating">
               <textarea
+                ref="task"
                 class="form-control"
                 placeholder="Task"
                 id="todo-task"
@@ -60,13 +62,25 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue';
-import submitForm from '../assets/js/submitForm';
+import { defineEmits, ref } from 'vue';
+import closeModal from '../assets/js/closeModal';
 const emit = defineEmits(['create-todo']);
+const title = ref(null);
+const task = ref(null);
 
-const onSubmit = submitForm.bind(null, ({ title, task }) => {
-  emit('create-todo', { title, task });
-});
+function onSubmit(form) {
+  form.classList.add('was-validated');
+
+  if (!form.checkValidity()) return;
+
+  emit('create-todo', {
+    title: title.value.value,
+    task: task.value.value,
+  });
+
+  form.reset();
+  closeModal(form);
+}
 </script>
 
 <style lang="scss" scoped></style>
