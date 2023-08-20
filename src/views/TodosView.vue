@@ -1,5 +1,6 @@
 <template>
-  <TodoCreator />
+  <TodoCreator @create-todo="createTodo" />
+
   <TodoEditor />
   <div class="list-group">
     <TodoItem
@@ -17,15 +18,17 @@ import TodoEditor from '../components/TodoEditor.vue';
 import { uid } from 'uid';
 import { ref } from 'vue';
 
-const todoList = ref([
-  {
-    title: 'test title',
+const todoList = ref([]);
+
+function createTodo(form, todo) {
+  todoList.value.push({
+    title: todo.title,
     id: uid(),
-    task: 'tak',
+    task: todo.task,
     isCompleted: false,
     created_at: new Date().toLocaleDateString(),
-  },
-]);
+  });
+}
 
 function completeTask(todoId) {
   const index = todoList.value.findIndex((todo) => todo.id == todoId);

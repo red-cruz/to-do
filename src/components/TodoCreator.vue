@@ -1,6 +1,7 @@
 <template>
   <div
     class="modal fade"
+    data-bs-backdrop="static"
     id="create-todo-modal"
     tabindex="-1"
     aria-hidden="true"
@@ -8,7 +9,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5">Create todo</h1>
+          <h1 class="modal-title fs-5">Create to-do</h1>
           <button
             type="button"
             class="btn-close"
@@ -20,7 +21,7 @@
           ref="createTodoForm"
           class="needs-validation"
           novalidate
-          @submit="handleSubmit($event)"
+          @submit.prevent="onSubmit($event.target)"
         >
           <div class="modal-body">
             <div class="form-floating mb-3">
@@ -35,11 +36,11 @@
             <div class="form-floating">
               <textarea
                 class="form-control"
-                placeholder="Leave a comment here"
-                id="todo-description"
+                placeholder="Task"
+                id="todo-task"
                 required
               ></textarea>
-              <label for="todo-description">Description</label>
+              <label for="todo-task">Task</label>
             </div>
           </div>
           <div class="modal-footer">
@@ -59,23 +60,27 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineEmits } from 'vue';
+import closeModal from '../assets/js/closeModal';
 const createTodoForm = ref(null);
+const emit = defineEmits(['create-todo']);
 
-function handleSubmit(e) {
-  e.preventDefault();
-  e.stopPropagation();
-  const form = e.target;
+onMounted(() => {});
+/**
+ * @param {HTMLFormElement} form
+ */
+function onSubmit(form) {
+  const title = form.querySelector('#todo-title');
+  const task = form.querySelector('#todo-task');
   form.classList.add('was-validated');
+  if (!form.checkValidity()) return;
+  emit('create-todo', form, {
+    title: title.value,
+    task: task.value,
+  });
+  form.reset();
+  closeModal(form);
 }
-onMounted(() => {
-  document
-    .getElementById('create-todo-modal')
-    .addEventListener('hidden.bs.modal', function () {
-      const form = createTodoForm.value;
-      form.classList.remove('was-validated');
-    });
-});
 </script>
 
 <style lang="scss" scoped></style>
